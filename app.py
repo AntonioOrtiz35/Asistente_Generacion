@@ -6,19 +6,26 @@ from dotenv import load_dotenv
 import json
 import re
 
+# Cargamos la API Key desde el archivo .env
 load_dotenv()
+
 app = Flask(__name__)
 
+# Configuración de la API de Gemini
 try:
-    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+    # --- CORRECCIÓN CLAVE AQUÍ ---
+    # Ahora buscamos la variable de entorno correcta: GOOGLE_API_KEY
+    genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
     model = genai.GenerativeModel('gemini-1.5-flash')
 except Exception as e:
     print(f"Error configurando la API de Gemini: {e}")
     model = None
 
+# --- Lógica de la Aplicación (sin cambios) ---
+
 def generar_publicacion_completa_con_ia(tipo_prenda, marca, color, talla, estado, caracteristicas):
     if not model:
-        return {"error": "Modelo de IA no configurado."}
+        return {"error": "Modelo de IA no configurado. Verifica la API Key en la configuración de Environment en Render."}
 
     prompt = f"""
     Actúa como una experta en marketing de moda y ventas para GoTrendier. Tu reputación es 5 estrellas.
@@ -50,6 +57,8 @@ def generar_publicacion_completa_con_ia(tipo_prenda, marca, color, talla, estado
         print(f"Error en la llamada a la API o procesando la respuesta: {e}")
         return {"error": f"Error de IA: {e}"}
 
+# --- Rutas de la Aplicación Web (sin cambios) ---
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     results = {}
@@ -69,7 +78,7 @@ def index():
                     'titulo': results_ia.get("titulo"),
                     'descripcion_gotrendier': results_ia.get("descripcion_gotrendier"),
                     'descripcion_facebook': results_ia.get("descripcion_facebook"),
-                    'precio': results_ia.get("rango_precio") # Usamos la nueva clave
+                    'precio': results_ia.get("rango_precio")
                 }
             else:
                 results = {'error': results_ia.get("error")}
