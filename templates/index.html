@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente de Publicación IA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Asistente de Publicación con IA</h1>
+        <p>Rellena los datos y deja que la IA de Gemini cree los textos por ti.</p>
+
+        <form action="/" method="POST">
+            <label for="tipo_prenda">Tipo de prenda</label>
+            <input type="text" id="tipo_prenda" name="tipo_prenda" placeholder="Ej: Vestido, Blusa..." required>
+            <label for="marca">Marca</label>
+            <input type="text" id="marca" name="marca" placeholder="Ej: Zara, H&M..." required>
+            <label for="estado">Estado de la prenda</label>
+            <select id="estado" name="estado">
+                <option>Nuevo con etiqueta</option>
+                <option>Nuevo sin etiqueta</option>
+                <option>Usado una vez</option>
+                <option>Usado en buen estado</option>
+            </select>
+            <label for="talla">Talla</label>
+            <input type="text" id="talla" name="talla" placeholder="Ej: M, CH, 28..." required>
+            <label for="color">Color</label>
+            <input type="text" id="color" name="color" placeholder="Ej: Azul cielo, Negro..." required>
+            <label for="caracteristicas_especiales">Características especiales</label>
+            <textarea id="caracteristicas_especiales" name="caracteristicas_especiales" placeholder="Ej: Tiro alto, Tela de lino..."></textarea>
+            <button type="submit">🚀 ¡Generar con IA!</button>
+        </form>
+
+        {% if results %}
+        <div class="results-container">
+            {% if results.error %}
+                <div class="error-box">Error: {{ results.error }}</div>
+            {% else %}
+                <div class="result-item">
+                    <h2>Rango de Precio Sugerido</h2>
+                    <p class="price">{{ results.precio }}</p>
+                </div>
+                <div class="result-item">
+                    <h2>Título para GoTrendier</h2>
+                    <div class="output-wrapper">
+                        <div class="output-box" id="titulo-text">{{ results.titulo }}</div>
+                        <button class="copy-btn" onclick="copyToClipboard('titulo-text', this)">Copiar</button>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <h2>Descripción para GoTrendier</h2>
+                    <div class="output-wrapper">
+                        <div class="output-box" id="gotrendier-text">{{ results.descripcion_gotrendier }}</div>
+                        <button class="copy-btn" onclick="copyToClipboard('gotrendier-text', this)">Copiar</button>
+                    </div>
+                </div>
+                <div class="result-item">
+                    <h2>Texto para Facebook</h2>
+                    <div class="output-wrapper">
+                        <div class="output-box" id="facebook-text">{{ results.descripcion_facebook }}</div>
+                        <button class="copy-btn" onclick="copyToClipboard('facebook-text', this)">Copiar</button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyToClipboard(elementId, buttonElement) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = buttonElement.innerText;
+                buttonElement.innerText = '¡Copiado!';
+                setTimeout(() => {
+                    buttonElement.innerText = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+        }
+    </script>
+</body>
+</html>

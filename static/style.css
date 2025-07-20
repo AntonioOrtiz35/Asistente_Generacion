@@ -1,0 +1,87 @@
+/* static/style.css */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+h1 { text-align: center; }
+p { text-align: center; color: #6c757d; }
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 2rem;
+}
+
+label { font-weight: 600; }
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+textarea { resize: vertical; }
+
+button[type="submit"] {
+    padding: 12px 20px;
+    background-color: #E83F6F;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 1rem;
+}
+button[type="submit"]:hover { background-color: #d1305f; }
+
+.results-container {
+    margin-top: 3rem;
+    border-top: 1px solid #e9ecef;
+    padding-top: 2rem;
+}
+.result-item { margin-bottom: 1.5rem; }
+h2 { font-size: 1.2rem; color: #343a40; border-bottom: 2px solid #E83F6F; padding-bottom: 5px; }
+.price { font-size: 2rem; font-weight: 700; color: #343a40; }
+
+.output-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.output-box {
+    flex-grow: 1;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    min-height: 50px;
+}
+
+.copy-btn {
+    padding: 8px 12px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.copy-btn:hover { background-color: #5a6268; }
